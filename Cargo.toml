@@ -1,0 +1,9 @@
+[package]
+name = "tiled"
+version = "0.1.0"
+authors = ["Yuri Iozzelli <y.iozzelli@gmail.com>"]
+
+[dependencies]
+serde = "0.8"
+serde_derive = "0.8"
+serde_json = "0.8"
