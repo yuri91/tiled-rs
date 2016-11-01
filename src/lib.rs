@@ -68,12 +68,8 @@ pub struct Map {
     layers: Vec<Layer>
 }
 
-#[derive(Debug)]
+#[derive(Debug,Clone)]
 pub struct TileInfo {
-    pub x: u32,
-    pub y: u32,
-    pub w: u32,
-    pub h: u32,
     pub u: u32,
     pub v: u32,
     pub source: String
@@ -114,10 +110,6 @@ impl Map {
             match set {
                 None => None,
                 Some(s) => Some(TileInfo{
-                    x:i*self.tilewidth,
-                    y:i*self.tileheight,
-                    w:self.tilewidth,
-                    h:self.tileheight,
                     u:(gid-s.firstgid)%s.columns,
                     v:(gid-s.firstgid)/s.columns,
                     source:s.image.clone()
