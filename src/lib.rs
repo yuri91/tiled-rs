@@ -69,6 +69,38 @@ pub struct Map {
 }
 
 #[derive(Debug)]
+pub struct TileInfo {
+    x: u32,
+    y: u32,
+    w: u32,
+    h: u32,
+    u: u32,
+    v: u32,
+    source: String
+}
+impl Map {
+    pub fn get(self: &Map, i: u32, j: u32) -> Vec<Option<TileInfo>> {
+        self.layers.iter().map(|l| {
+            let k = i+j*self.width;
+            let gid = l.data[k as usize];
+            let set = self.tilesets.iter().rev().find(|&s| s.firstgid < gid);
+            match set {
+                None => None,
+                Some(s) => Some(TileInfo{
+                    x:i*self.tilewidth,
+                    y:i*self.tileheight,
+                    w:self.tilewidth,
+                    h:self.tileheight,
+                    u:(gid-s.firstgid)%s.columns,
+                    v:(gid-s.firstgid)/s.columns,
+                    source:s.image.clone()
+                })
+            }
+        }).collect::<Vec<_>>()
+    }
+}
+
+#[derive(Debug)]
 pub enum Error {
     Io(io::Error),
     Parse(serde_json::Error)
