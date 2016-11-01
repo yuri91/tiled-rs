@@ -56,13 +56,13 @@ pub struct Set {
 
 #[derive(Deserialize, Debug)]
 pub struct Map {
+    pub width: u32,
+    pub height: u32,
+    pub tileheight: u32,
+    pub tilewidth: u32,
     version: f64,
     orientation: Orientation,
     renderorder: RenderOrder,
-    width: u32,
-    height: u32,
-    tileheight: u32,
-    tilewidth: u32,
     nextobjectid: u32,
     tilesets: Vec<Set>,
     layers: Vec<Layer>
@@ -70,13 +70,13 @@ pub struct Map {
 
 #[derive(Debug)]
 pub struct TileInfo {
-    x: u32,
-    y: u32,
-    w: u32,
-    h: u32,
-    u: u32,
-    v: u32,
-    source: String
+    pub x: u32,
+    pub y: u32,
+    pub w: u32,
+    pub h: u32,
+    pub u: u32,
+    pub v: u32,
+    pub source: String
 }
 
 #[derive(Debug)]
