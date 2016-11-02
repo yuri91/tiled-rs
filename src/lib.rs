@@ -64,7 +64,7 @@ pub struct Map {
     orientation: Orientation,
     renderorder: RenderOrder,
     nextobjectid: u32,
-    tilesets: Vec<Set>,
+    pub tilesets: Vec<Set>,
     layers: Vec<Layer>
 }
 
