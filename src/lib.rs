@@ -49,7 +49,7 @@ pub struct Set {
     margin: u32,
     tilecount: u32,
     columns: u32,
-    image: String,
+    pub image: String,
     imageheight: u32,
     imagewidth: u32
 }
