@@ -72,7 +72,7 @@ pub struct Map {
 pub struct TileInfo {
     pub u: u32,
     pub v: u32,
-    pub source: String
+    pub set: usize
 }
 
 #[derive(Debug)]
@@ -106,13 +106,16 @@ impl Map {
         self.layers.iter().map(|l| {
             let k = i+j*self.width;
             let gid = l.data[k as usize];
-            let set = self.tilesets.iter().rev().find(|&s| s.firstgid < gid);
+            let set = self.tilesets.iter()
+                .rev()
+                .enumerate()
+                .find(|&(_,s)| s.firstgid < gid);
             match set {
                 None => None,
-                Some(s) => Some(TileInfo{
+                Some((i,s)) => Some(TileInfo{
                     u:(gid-s.firstgid)%s.columns,
                     v:(gid-s.firstgid)/s.columns,
-                    source:s.image.clone()
+                    set:self.tilesets.len()-i-1
                 })
             }
         }).collect::<Vec<_>>()
