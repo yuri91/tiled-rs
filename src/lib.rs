@@ -114,7 +114,7 @@ impl Map {
                 None => None,
                 Some((i,s)) => Some(TileInfo{
                     u:(gid-s.firstgid)%s.columns,
-                    v:(gid-s.firstgid)/s.columns,
+                    v:(s.imageheight/s.tileheight-1)-(gid-s.firstgid)/s.columns,
                     set:self.tilesets.len()-i-1
                 })
             }
