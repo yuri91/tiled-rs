@@ -102,23 +102,28 @@ impl Map {
 
         Ok(map)
     }
-    pub fn get(self: &Map, i: u32, j: u32) -> Vec<Option<TileInfo>> {
-        self.layers.iter().map(|l| {
-            let k = i+j*self.width;
-            let gid = l.data[k as usize];
-            let set = self.tilesets.iter()
-                .rev()
-                .enumerate()
-                .find(|&(_,s)| s.firstgid < gid);
-            match set {
-                None => None,
-                Some((i,s)) => Some(TileInfo{
-                    u:(gid-s.firstgid)%s.columns,
-                    v:(s.imageheight/s.tileheight-1)-(gid-s.firstgid)/s.columns,
-                    set:self.tilesets.len()-i-1
-                })
+    pub fn get(self: &Map, i: u32, j: u32, l: u32) -> Option<TileInfo> {
+        match self.layers.get(l as usize) {
+            None => None,
+            Some(layer) => {
+                let k = i+j*self.width;
+                let gid = layer.data[k as usize];
+                let set = self.tilesets.iter()
+                    .rev()
+                    .enumerate()
+                    .find(|&(_,s)| s.firstgid < gid);
+                match set {
+                    None => None,
+                    Some((i,s)) => {
+                        //println!("{} {}",gid,s.firstgid);
+                        Some(TileInfo{
+                        u:(gid-s.firstgid)%s.columns,
+                        v:(s.imageheight/s.tileheight-1)-(gid-s.firstgid)/s.columns,
+                        set:self.tilesets.len()-i-1
+                    })}
+                }
             }
-        }).collect::<Vec<_>>()
+        }
     }
 }
 
